@@ -25,7 +25,8 @@ function namespaceAutoload( $path ) {
         return;
     }
 
-    $class = strrchr( $path, DIRECTORY_SEPARATOR );
+    // Поиск расширяющих классов
+    $class = substr(strrchr( $path, DIRECTORY_SEPARATOR ), 1);
     $search = str_split( $class );
 
     $start = null;
@@ -57,12 +58,7 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    $test = new AbstractFactoryMethod\BloggsCommsManager();
-    print $test->getHeaderText();
-    print $test->getApptEncoder()->encode();
-    print $test->getContactEncoder()->encode();
-    print $test->getTtdEncoder()->encode();
-    print $test->getFooterText();
+    FrontController\Controller::run();
 
 } catch ( \Exception $e ) {
     print $e->getMessage();
