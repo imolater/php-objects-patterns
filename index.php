@@ -57,10 +57,13 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    $test = new FactoryMethod\BloggsCommsManager();
+    $test = new AbstractFactoryMethod\BloggsCommsManager();
     print $test->getHeaderText();
     print $test->getApptEncoder()->encode();
+    print $test->getContactEncoder()->encode();
+    print $test->getTtdEncoder()->encode();
     print $test->getFooterText();
+
 } catch ( \Exception $e ) {
     print $e->getMessage();
 }
