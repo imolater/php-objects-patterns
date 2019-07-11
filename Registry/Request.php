@@ -19,11 +19,8 @@ class Request {
             return;
         }
 
-        foreach ( $_SERVER[ 'argv' ] as $arg ) {
-            if ( strpos( $arg, '=' ) ) {
-                list( $key, $value ) = explode( '=', $arg );
-                $this->setProperty( $key, $value );
-            }
+        foreach ( $_REQUEST as $key => $value ) {
+            $this->setProperty( $key, $value );
         }
     }
 
@@ -39,7 +36,7 @@ class Request {
         $this->storage[ $key ] = $value;
     }
 
-    public function addFeedback( $mess ) {
+    public function addMessage( $mess ) {
         $this->messages[] = $mess;
     }
 

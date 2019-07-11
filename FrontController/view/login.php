@@ -1,6 +1,6 @@
 <?php
 /**
- * @var Request $request
+ * @var FrontController\Request $request
  */
 ?>
 <html lang="ru">

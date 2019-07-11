@@ -58,10 +58,8 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    $mapper = new \Database\Mapper\VenueMapper();
-    $venue = $mapper->select(1);
-    foreach ($venue->getSpaces() as $space)
-        print $space->getName() . "\n";
+    $controller = new PageController\AddVenue();
+    $controller->process();
 
 } catch ( \Exception $e ) {
     print $e->getMessage();
