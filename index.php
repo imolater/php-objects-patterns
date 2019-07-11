@@ -58,9 +58,10 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    $manager = new TransactionScript\VenueManager();
-    $result = $manager->addVenue( 'Зажопинское', array( 'Липовое', 'Лабутеновое' ) );
-    print_r( $result );
+    $mapper = new \Database\Mapper\VenueMapper();
+    $venue = $mapper->select(1);
+    foreach ($venue->getSpaces() as $space)
+        print $space->getName() . "\n";
 
 } catch ( \Exception $e ) {
     print $e->getMessage();
