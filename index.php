@@ -13,31 +13,41 @@ function namespaceAutoload( $path ) {
 
     if ( file_exists( $file ) ) {
         require_once( "$file" );
-    } else {
-        $class = substr( strrchr( $path, DIRECTORY_SEPARATOR ), 1 );
-        $search = str_split( $class );
+        return;
+    }
 
-        $start = null;
-        $end = null;
+    // Поиск в одиночном файле-контейнере с именем namespace
+    $class = substr($path, 0, strpos($path, DIRECTORY_SEPARATOR));
+    $file = "{$class}.php";
 
-        foreach ( $search as $key => $letter ) {
-            if ( $letter === strtoupper( $letter ) )
-                if ( is_null( $start ) )
-                    $start = $key;
-                else if ( ! is_null( $start ) && is_null( $end ) )
-                    $end = $key;
-                else
-                    break;
-        }
+    if (file_exists($file)) {
+        require_once( "$file" );
+        return;
+    }
 
-        $newClass = substr( $class, $end );
-        $newPath = str_replace( $class, $newClass, $path );
+    $class = strrchr( $path, DIRECTORY_SEPARATOR );
+    $search = str_split( $class );
 
-        $file = stream_resolve_include_path( "$newPath.php" );
+    $start = null;
+    $end = null;
 
-        if ( file_exists( $file ) ) {
-            require_once( "$file" );
-        }
+    foreach ( $search as $key => $letter ) {
+        if ( $letter === strtoupper( $letter ) )
+            if ( is_null( $start ) )
+                $start = $key;
+            else if ( ! is_null( $start ) && is_null( $end ) )
+                $end = $key;
+            else
+                break;
+    }
+
+    $newClass = substr( $class, $end );
+    $newPath = str_replace( $class, $newClass, $path );
+
+    $file = stream_resolve_include_path( "$newPath.php" );
+
+    if ( file_exists( $file ) ) {
+        require_once( "$file" );
     }
 }
 
@@ -47,9 +57,17 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-
-    print 'Тесты';
-
+    // Создаём объект
+    $test = Singleton\Preferences::getInstance();
+    // Устанавливаем свойство
+    $test->setProperty( 'name', 'Иван' );
+    // Записываем объект в новую переменную
+    $test2 = Singleton\Preferences::getInstance();
+    // Меняем свойство
+    $test2->setProperty( 'name', 'Алёша' );
+    // Получаем один и тот же объект в обоих переменных
+    print $test->getProperty( 'name' );
+    print $test2->getProperty( 'name' );
 } catch ( \Exception $e ) {
     print $e->getMessage();
 }
