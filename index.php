@@ -1,6 +1,6 @@
 <?php
 // Добавляем корень сайта в пути, по которым будут искаться классы
-set_include_path( get_include_path() . PATH_SEPARATOR . __DIR__);
+set_include_path( get_include_path() . PATH_SEPARATOR . __DIR__ );
 
 // Функция автозагрузки
 function namespaceAutoload( $path ) {
@@ -17,10 +17,10 @@ function namespaceAutoload( $path ) {
     }
 
     // Поиск в одиночном файле-контейнере с именем namespace
-    $class = substr($path, 0, strpos($path, DIRECTORY_SEPARATOR));
+    $class = substr( $path, 0, strpos( $path, DIRECTORY_SEPARATOR ) );
     $file = "{$class}.php";
 
-    if (file_exists($file)) {
+    if ( file_exists( $file ) ) {
         require_once( "$file" );
         return;
     }
@@ -57,9 +57,12 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    Registry\ApplicationRegistry::setDSN( 'test' );
-    print Registry\ApplicationRegistry::getDSN();
-    print_r(Registry\ApplicationRegistry::getRequest());
+    $login = new Observer\Login();
+    new Observer\SecurityMonitor( $login );
+    new Observer\GeneralLogger( $login );
+    new Observer\PartnershipTool( $login );
+
+    $login->notify();
 } catch ( \Exception $e ) {
     print $e->getMessage();
 }
