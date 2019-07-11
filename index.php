@@ -57,12 +57,10 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    $login = new Observer\Login();
-    new Observer\SecurityMonitor( $login );
-    new Observer\GeneralLogger( $login );
-    new Observer\PartnershipTool( $login );
-
-    $login->notify();
+    $test = new FactoryMethod\BloggsCommsManager();
+    print $test->getHeaderText();
+    print $test->getApptEncoder()->encode();
+    print $test->getFooterText();
 } catch ( \Exception $e ) {
     print $e->getMessage();
 }
