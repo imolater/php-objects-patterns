@@ -42,3 +42,16 @@ function namespaceAutoload( $path ) {
 }
 
 spl_autoload_register( 'namespaceAutoload' );
+?>
+
+<pre>
+<?
+try {
+
+    print 'Тесты';
+
+} catch ( \Exception $e ) {
+    print $e->getMessage();
+}
+?>
+</pre>
