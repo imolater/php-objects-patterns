@@ -12,6 +12,14 @@ class ApplicationRegistry extends Registry {
     private $timeMarks = array();
     private $request = null;
 
+    private function __construct() {
+        $this->storage['db_access'] = array(
+            'dsn' => 'mysql:dbname=dbtokyocosmetic;host=127.0.0.1',
+            'login' => 'admin',
+            'password' => '123456'
+        );
+    }
+
     static function instance() {
         if ( is_null( self::$instance ) ) {
             self::$instance = new self();
@@ -56,11 +64,11 @@ class ApplicationRegistry extends Registry {
     }
 
     static function getDSN() {
-        return self::instance()->get( 'dsn' );
+        return self::instance()->get( 'db_access' );
     }
 
     static function setDSN( $value ) {
-        self::instance()->set( 'dsn', $value );
+        self::instance()->set( 'db_access', $value );
     }
 
     static function getRequest() {

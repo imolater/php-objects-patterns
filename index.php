@@ -58,7 +58,9 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    FrontController\Controller::run();
+    $manager = new TransactionScript\VenueManager();
+    $result = $manager->addVenue( 'Зажопинское', array( 'Липовое', 'Лабутеновое' ) );
+    print_r( $result );
 
 } catch ( \Exception $e ) {
     print $e->getMessage();
