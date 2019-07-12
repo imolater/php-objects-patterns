@@ -10,7 +10,7 @@ class VenueDeferredCollection extends VenueCollection {
     private $stmtValues;
     private $run = false;
 
-    public function __construct( $raw, Mapper $mapper, \PDOStatement $stmt ) {
+    public function __construct( $raw, DomainObjectFactory $mapper, \PDOStatement $stmt ) {
         parent::__construct( null, $mapper );
         $this->stmt = $stmt;
         $this->stmtValues = $raw;
@@ -32,7 +32,7 @@ class SpaceDeferredCollection extends SpaceCollection {
     private $stmtValues;
     private $run = false;
 
-    public function __construct( $raw, Mapper $mapper, \PDOStatement $stmt ) {
+    public function __construct( $raw, DomainObjectFactory $mapper, \PDOStatement $stmt ) {
         parent::__construct( null, $mapper );
         $this->stmt = $stmt;
         $this->stmtValues = $raw;
@@ -59,7 +59,7 @@ class EventDeferredCollection extends EventCollection {
      * Данные для запроса к БД
      * Сам запрос к БД
      */
-    public function __construct( $raw, Mapper $mapper, \PDOStatement $stmt ) {
+    public function __construct( $raw, DomainObjectFactory $mapper, \PDOStatement $stmt ) {
         parent::__construct( null, $mapper );
         $this->stmt = $stmt;
         $this->stmtValues = $raw;

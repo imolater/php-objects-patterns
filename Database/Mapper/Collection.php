@@ -15,7 +15,9 @@ abstract class Collection implements \Iterator {
     private $pointer = 0;
     private $objects = [];
 
-    function __construct( array $raw = null, Mapper $mapper = null ) {
+    // В роли $mapper может выступать класс Mapper или DomainObjectFactory
+    // в зависимости от того, по каком шаблону мы решили разрабатывать
+    function __construct( array $raw = null, DomainObjectFactory $mapper = null ) {
         // При создании можно передать массив данных, из которых
         // будут создаваться объекты.
         // В таком случае, также нужно передать Mapper, с помощью которого

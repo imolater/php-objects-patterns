@@ -5,23 +5,29 @@ namespace Database\Mapper;
 use Database\Domain;
 
 abstract class DomainObjectFactory {
+    // Создать объект
     public function createObject(array $data) {
+        // Смотрим есть ли в кэше
         $cacheObj = $this->getFromMap($data['id']);
 
         if (! is_null($cacheObj))
             return $cacheObj;
 
+        // Если нет, то используем конкретную реализацию для
+        // создания и помещаем в кэш
         $object = $this->doCreateObject($data);
         $this->addToMap($object);
 
         return $object;
     }
 
+    // Взять из кэша
     public function getFromMap( $id ) {
         $class = $this->getTargetClass();
         return Domain\ObjectWatcher::get( $id, $class );
     }
 
+    // Добавить в кэш
     public function addToMap( Domain\DomainObject $object ) {
         Domain\ObjectWatcher::add( $object );
     }

@@ -52,3 +52,16 @@ class EventSelectFactory extends SelectFactory {
         return 'event';
     }
 }
+
+/* Тесты
+    // Создаём фабрику персистентности
+    $persistence = new \Database\Mapper\VenuePersistenceFactory();
+    // Получаем фабрику запросов select
+    $select = $persistence->getSelectFactory();
+    // Создаём подготовитель данных запросов
+    $idObj = new \Database\Mapper\VenueIdentityObject();
+    $idObj->field('name')->eq('happy');
+    // Строим запрос
+    $query = $select->newSelect($idObj);
+    print_r($query);
+*/

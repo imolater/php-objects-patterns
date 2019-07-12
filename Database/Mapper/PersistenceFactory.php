@@ -7,20 +7,25 @@ namespace Database\Mapper;
 
 abstract class PersistenceFactory {
     protected $domainObjectFactory;
+    protected $identityObject;
     protected $selectFactory;
     protected $updateFactory;
 
+    // Статичный метод получения нужной нам фабрики персистентности
     public static function getFactory( string $type ): PersistenceFactory {
         $class = str_replace( 'Domain', 'Mapper', $type );
         $factory = $class . "PersistenceFactory";
         return new $factory();
     }
 
+    // Статичный метод получения сборщика доменных объектов
     public static function getAssembler( string $type ): DomainObjectAssembler {
         $factory = self::getFactory( $type );
         return new DomainObjectAssembler( $factory );
     }
 
+
+    // Получение фабрики объектов
     public function getDomainObjectFactory(): DomainObjectFactory {
         if ( is_null( $this->domainObjectFactory ) )
             $this->domainObjectFactory = $this->createDomainObjectFactory();
@@ -28,6 +33,15 @@ abstract class PersistenceFactory {
         return $this->domainObjectFactory;
     }
 
+    // Получение фабрики данных запросов
+    public function getIdentityObject(): IdentityObject {
+        if ( is_null( $this->identityObject ) )
+            $this->identityObject = $this->createIdentityObject();
+
+        return $this->identityObject;
+    }
+
+    // Получение фабрики запросов select
     public function getSelectFactory(): SelectFactory {
         if ( is_null( $this->selectFactory ) )
             $this->selectFactory = $this->createSelectFactory();
@@ -35,6 +49,7 @@ abstract class PersistenceFactory {
         return $this->selectFactory;
     }
 
+    // Получение фабрики запросов update
     public function getUpdateFactory(): UpdateFactory {
         if ( is_null( $this->updateFactory ) )
             $this->updateFactory = $this->createUpdateFactory();
@@ -42,25 +57,31 @@ abstract class PersistenceFactory {
         return $this->updateFactory;
     }
 
-    abstract function createDomainObjectFactory(): DomainObjectFactory;
+    abstract protected function createDomainObjectFactory(): DomainObjectFactory;
 
-    abstract function createSelectFactory(): SelectFactory;
+    abstract protected function createIdentityObject(): IdentityObject;
 
-    abstract function createUpdateFactory(): UpdateFactory;
+    abstract protected function createSelectFactory(): SelectFactory;
+
+    abstract protected function createUpdateFactory(): UpdateFactory;
 
     abstract function getCollection( array $raw, \PDOStatement $stmt );
 }
 
 class VenuePersistenceFactory extends PersistenceFactory {
-    public function createDomainObjectFactory(): DomainObjectFactory {
+    protected function createDomainObjectFactory(): DomainObjectFactory {
         return new VenueDomainObjectFactory();
     }
 
-    public function createSelectFactory(): SelectFactory {
+    protected function createIdentityObject(): IdentityObject {
+        return new VenueIdentityObject();
+    }
+
+    protected function createSelectFactory(): SelectFactory {
         return new VenueSelectFactory();
     }
 
-    public function createUpdateFactory(): UpdateFactory {
+    protected function createUpdateFactory(): UpdateFactory {
         return new VenueUpdateFactory();
     }
 
@@ -70,15 +91,19 @@ class VenuePersistenceFactory extends PersistenceFactory {
 }
 
 class SpacePersistenceFactory extends PersistenceFactory {
-    public function createDomainObjectFactory(): DomainObjectFactory {
+    protected function createDomainObjectFactory(): DomainObjectFactory {
         return new SpaceDomainObjectFactory();
     }
 
-    public function createSelectFactory(): SelectFactory {
+    protected function createIdentityObject(): IdentityObject {
+        return new SpaceIdentityObject();
+    }
+
+    protected function createSelectFactory(): SelectFactory {
         return new SpaceSelectFactory();
     }
 
-    public function createUpdateFactory(): UpdateFactory {
+    protected function createUpdateFactory(): UpdateFactory {
         return new SpaceUpdateFactory();
     }
 
@@ -88,15 +113,19 @@ class SpacePersistenceFactory extends PersistenceFactory {
 }
 
 class EventPersistenceFactory extends PersistenceFactory {
-    public function createDomainObjectFactory(): DomainObjectFactory {
+    protected function createDomainObjectFactory(): DomainObjectFactory {
         return new EventDomainObjectFactory();
     }
 
-    public function createSelectFactory(): SelectFactory {
+    protected function createIdentityObject(): IdentityObject {
+        return new EventIdentityObject();
+    }
+
+    protected function createSelectFactory(): SelectFactory {
         return new EventSelectFactory();
     }
 
-    public function createUpdateFactory(): UpdateFactory {
+    protected function createUpdateFactory(): UpdateFactory {
         return new EventUpdateFactory();
     }
 
@@ -104,3 +133,19 @@ class EventPersistenceFactory extends PersistenceFactory {
         return new EventDeferredCollection($raw, $this->getDomainObjectFactory(), $stmt);
     }
 }
+
+/* Тесты
+    // Получаем сборщик доменных объектов
+    $mapper = \Database\Mapper\PersistenceFactory::getAssembler(\Database\Domain\Venue::class);
+    // Достаём фабрику данных запросов
+    $idObj = $mapper->factory->getIdentityObject();
+    // Формируем данные для запроса
+    $query = $idObj->field('id')->eq('1');
+    // Выполняем запрос
+    $venue = $mapper->selectOne($query);
+
+    // Пробегаем коллекцию в цикле
+    foreach ($venue->getSpaces() as $space) {
+        print $space->getName() . "\n";
+    }
+*/

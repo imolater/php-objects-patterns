@@ -52,6 +52,8 @@ class VenueUpdateFactory extends UpdateFactory {
         $id = $object->getId();
         $conditions = null;
 
+        // Если есть id, то это существующий в БД объект, значит
+        // добавляем условия для UPDATE
         if (! is_null($id))
             $conditions['id'] = $id;
 
@@ -69,8 +71,6 @@ class SpaceUpdateFactory extends UpdateFactory {
         $id = $object->getId();
         $conditions = null;
 
-        // Если есть id, то это существующий в БД объект, значит
-        // добавляем условия для UPDATE
         if (! is_null($id))
             $conditions['id'] = $id;
 
@@ -91,8 +91,6 @@ class EventUpdateFactory extends UpdateFactory {
         $id = $object->getId();
         $conditions = null;
 
-        // Если есть id, то это существующий в БД объект, значит
-        // добавляем условия для UPDATE
         if (! is_null($id))
             $conditions['id'] = $id;
 
@@ -106,3 +104,15 @@ class EventUpdateFactory extends UpdateFactory {
         return $this->buildStatement("event", $fields, $conditions);
     }
 }
+
+/* Тесты
+    // Создаём фабрику персистентности
+    $persistence = new \Database\Mapper\VenuePersistenceFactory();
+    // Получаем фабрику запросов update
+    $select = $persistence->getUpdateFactory();
+    // Объект для обновления
+    $venue = new \Database\Domain\Venue('happy', 1);
+    // Строим запрос
+    $query = $select->newUpdate($venue);
+    print_r($query);
+*/

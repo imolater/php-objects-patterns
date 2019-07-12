@@ -26,7 +26,7 @@ function namespaceAutoload( $path ) {
     }
 
     // Поиск расширяющих классов
-    $class = substr(strrchr( $path, DIRECTORY_SEPARATOR ), 1);
+    $class = substr( strrchr( $path, DIRECTORY_SEPARATOR ), 1 );
     $search = str_split( $class );
 
     $start = null;
@@ -36,7 +36,7 @@ function namespaceAutoload( $path ) {
         if ( $letter === strtoupper( $letter ) )
             if ( is_null( $start ) )
                 $start = $key;
-            else if ( ! is_null( $start ) && is_null( $end ) )
+            elseif ( !is_null( $start ) && is_null( $end ) )
                 $end = $key;
             else
                 break;
@@ -58,9 +58,19 @@ spl_autoload_register( 'namespaceAutoload' );
 <pre>
 <?
 try {
-    $controller = new PageController\AddVenue();
-    $controller->process();
+    // Получаем сборщик доменных объектов
+    $mapper = \Database\Mapper\PersistenceFactory::getAssembler(\Database\Domain\Venue::class);
+    // Достаём фабрику данных запросов
+    $idObj = $mapper->factory->getIdentityObject();
+    // Формируем данные для запроса
+    $query = $idObj->field('id')->eq('1');
+    // Выполняем запрос
+    $venue = $mapper->selectOne($query);
 
+    // Пробегаем коллекцию в цикле
+    foreach ($venue->getSpaces() as $space) {
+        print $space->getName() . "\n";
+    }
 } catch ( \Exception $e ) {
     print $e->getMessage();
 }

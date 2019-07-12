@@ -3,6 +3,7 @@
 namespace Database\Mapper;
 
 use Database\Domain;
+use Registry\ApplicationRegistry;
 
 abstract class Mapper {
     protected $selectStmt;
@@ -14,14 +15,13 @@ abstract class Mapper {
     public function __construct() {
         // При создании необходимо установить связь с БД
         // Откуда получать данные зависит от реализации
-        if ( ! isset( self::$PDO ) ) {
-            $dsn = 'mysql:dbname=dbtokyocosmetic;host=127.0.0.1';
-            $user = 'admin';
-            $pwd = '123456';
-
-            self::$PDO = new \PDO( $dsn, $user, $pwd );
-            self::$PDO->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
+        $db = ApplicationRegistry::getDSN();
+        if ( is_null( $db ) ) {
+            throw new \Exception( 'DSN не определён!' );
         }
+
+        self::$PDO = new \PDO( $db['dsn'], $db['login'], $db['password'] );
+        self::$PDO->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
     }
 
     // Выборка по id из БД
