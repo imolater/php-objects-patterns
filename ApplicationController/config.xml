@@ -1,0 +1,36 @@
+<control>
+    <view>
+        <value>main</value>
+    </view>
+
+    <view status="OK">
+        <value>main</value>
+    </view>
+
+    <view status="ERROR">
+        <value>error</value>
+    </view>
+
+    <command name="ListVenues">
+        <view>listVenues</view>
+    </command>
+
+    <command name="QuickAddVenue">
+        <class>AddVenue</class>
+        <view>quickAddVenue</view>
+    </command>
+
+    <command name="AddVenue">
+        <view>addVenue</view>
+        <status value="OK">
+            <forward>AddSpace</forward>
+        </status>
+    </command>
+
+    <command name="AddSpace">
+        <view>addSpace</view>
+        <status value="OK">
+            <forward>ListVenues</forward>
+        </status>
+    </command>
+</control>
