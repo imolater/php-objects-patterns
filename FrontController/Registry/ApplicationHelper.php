@@ -20,7 +20,7 @@ class ApplicationHelper {
     }
 
     function init() {
-        $dsn = ApplicationRegistry::getDSN();
+        $dsn = \Registry\ApplicationRegistry::getDSN();
 
         if ( is_null( $dsn ) ) {
             $this->getOptions();
@@ -39,7 +39,7 @@ class ApplicationHelper {
             $dsn = (string)$options->dsn;
             $this->ensure( $dsn, 'DSN не найден' );
 
-            ApplicationRegistry::setDSN( $dsn );
+            \Registry\ApplicationRegistry::setDSN( $dsn );
         } catch ( ApplicationException $e ) {
             print $e->getMessage();
         }

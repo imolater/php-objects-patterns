@@ -2,75 +2,17 @@
 // Добавляем корень сайта в пути, по которым будут искаться классы
 set_include_path( get_include_path() . PATH_SEPARATOR . __DIR__ );
 
-// Функция автозагрузки
-function namespaceAutoload( $path ) {
-    // Заменяем символы разделяющие директории на поддерживаемые OS
-    if ( preg_match( '/\\\\/', $path ) ) {
-        $path = str_replace( '\\', DIRECTORY_SEPARATOR, $path );
-    }
-
-    $file = stream_resolve_include_path( "$path.php" );
-
-    if ( file_exists( $file ) ) {
-        require_once( "$file" );
-        return;
-    }
-
-    // Поиск в одиночном файле-контейнере с именем namespace
-    $class = substr( $path, 0, strpos( $path, DIRECTORY_SEPARATOR ) );
-    $file = "{$class}.php";
-
-    if ( file_exists( $file ) ) {
-        require_once( "$file" );
-        return;
-    }
-
-    // Поиск расширяющих классов
-    $class = substr( strrchr( $path, DIRECTORY_SEPARATOR ), 1 );
-    $search = str_split( $class );
-
-    $start = null;
-    $end = null;
-
-    foreach ( $search as $key => $letter ) {
-        if ( $letter === strtoupper( $letter ) )
-            if ( is_null( $start ) )
-                $start = $key;
-            elseif ( !is_null( $start ) && is_null( $end ) )
-                $end = $key;
-            else
-                break;
-    }
-
-    $newClass = substr( $class, $end );
-    $newPath = str_replace( $class, $newClass, $path );
-
-    $file = stream_resolve_include_path( "$newPath.php" );
-
-    if ( file_exists( $file ) ) {
-        require_once( "$file" );
-    }
-}
-
-spl_autoload_register( 'namespaceAutoload' );
+require_once 'autoload.php';
 ?>
 
 <pre>
 <?
 try {
-    // Получаем сборщик доменных объектов
-    $mapper = \Database\Mapper\PersistenceFactory::getAssembler(\Database\Domain\Venue::class);
-    // Достаём фабрику данных запросов
-    $idObj = $mapper->factory->getIdentityObject();
-    // Формируем данные для запроса
-    $query = $idObj->field('id')->eq('1');
-    // Выполняем запрос
-    $venue = $mapper->selectOne($query);
-
-    // Пробегаем коллекцию в цикле
-    foreach ($venue->getSpaces() as $space) {
-        print $space->getName() . "\n";
-    }
+    // Имитация запроса с данными
+    $request = Registry\ApplicationRegistry::getRequest();
+    $request->setProperty('action', 'login');
+    // Активация контроллера
+    FrontController\Controller::run();
 } catch ( \Exception $e ) {
     print $e->getMessage();
 }

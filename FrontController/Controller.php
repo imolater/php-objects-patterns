@@ -6,7 +6,6 @@
 namespace FrontController;
 
 use FrontController\Command\CommandResolver;
-use FrontController\Registry;
 
 class Controller {
     private function __construct() { }
@@ -32,9 +31,7 @@ class Controller {
      * @throws \ReflectionException
      */
     private function handleRequest() {
-        $request = Registry\ApplicationRegistry::getRequest();
-        // Имитация параметра запроса для подключения шаблона
-        $request->setProperty('action', 'login');
+        $request = \Registry\ApplicationRegistry::getRequest();
         $resolver = new CommandResolver();
         $cmd = $resolver->getCommand( $request );
         $cmd->execute( $request );
@@ -42,5 +39,9 @@ class Controller {
 }
 
 /* Тесты
+// Имитация запроса с данными
+$request = Registry\ApplicationRegistry::getRequest();
+$request->setProperty('action', 'login');
+// Активация контроллера
 FrontController\Controller::run();
 */

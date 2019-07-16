@@ -5,8 +5,6 @@
 
 namespace FrontController\Command;
 
-use FrontController\Request;
-
 class CommandResolver {
     private $baseCmd = null;
     private $defaultCmd = null;
@@ -22,11 +20,11 @@ class CommandResolver {
     }
 
     /**
-     * @param Request $request
+     * @param \Registry\Request $request
      * @return DefaultCommand|object|null
      * @throws \ReflectionException
      */
-    public function getCommand( Request $request ) {
+    public function getCommand( \Registry\Request $request ) {
         $cmd = $request->getProperty( 'action' );
         $dir = $this->dir;
         $sep = DIRECTORY_SEPARATOR;

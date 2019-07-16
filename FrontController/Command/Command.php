@@ -2,8 +2,6 @@
 
 namespace FrontController\Command;
 
-use FrontController\Request;
-
 abstract class Command {
     protected $templatesDir;
 
@@ -11,15 +9,15 @@ abstract class Command {
         $this->templatesDir = dirname(__FILE__, 2) . "/view";
     }
 
-    public function execute( Request $request ) {
+    public function execute( \Registry\Request $request ) {
         $this->doExecute( $request );
     }
 
-    abstract function doExecute( Request $request );
+    abstract function doExecute( \Registry\Request $request );
 }
 
 class DefaultCommand extends Command {
-    public function doExecute( Request $request ) {
+    public function doExecute( \Registry\Request $request ) {
         $request->addMessage( "Добро пожаловать в Woo!" );
         include( $this->templatesDir . '/main.php');
     }
