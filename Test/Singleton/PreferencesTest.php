@@ -7,7 +7,7 @@ use Singleton\Preferences;
 
 require_once 'autoload.php';
 
-class SingletonTest extends TestCase {
+class PreferencesTest extends TestCase {
     public function testGetInstance() {
         // Получаем объект и устанавливаем свойство
         $object = Preferences::getInstance();
