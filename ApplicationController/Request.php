@@ -24,9 +24,6 @@ class Request {
                 $this->setProperty( $key, $value );
             }
         }
-
-        $this->setProperty( 'action', 'AddVenue' );
-        $this->setProperty('venueName', 'Рыба-Меч');
     }
 
     public function getProperty( $key ) {
@@ -43,7 +40,7 @@ class Request {
 
     // Конкретный геттер для получения последней команды
     // из хранилища настроек запроса
-    public function getLastCommand() {
+    public function getLastCommand(): ?Command {
         if ( isset( $this->storage[ 'lastCmd' ]) ) {
             return $this->storage[ 'lastCmd' ];
         }

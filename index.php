@@ -8,11 +8,12 @@ require_once 'autoload.php';
 <pre>
 <?
 try {
-    // Имитация запроса с данными
-    $request = Registry\ApplicationRegistry::getRequest();
-    $request->setProperty('action', 'login');
-    // Активация контроллера
-    FrontController\Controller::run();
+    // Имитируем отправку запроса
+    $request = ApplicationController\Registry\ApplicationRegistry::getRequest();
+    $request->setProperty( 'action', 'AddVenue' );
+    $request->setProperty( 'venueName', 'Рыба-Меч' );
+    // Вызываем контроллер
+    ApplicationController\FrontController::run();
 } catch ( \Exception $e ) {
     print $e->getMessage();
 }

@@ -2,6 +2,7 @@
 
 namespace ApplicationController\Command;
 
+use ApplicationController\Exception\CommandException;
 use ApplicationController\Request;
 
 abstract class Command {
@@ -40,14 +41,4 @@ abstract class Command {
     }
 
     abstract function doExecute( Request $request );
-}
-
-class DefaultCommand extends Command {
-    public function doExecute( Request $request ) {
-        $request->addTemplateData( 'msg', "Добро пожаловать в Woo!" );
-        return self::getStatusCode( 'OK' );
-    }
-}
-
-class CommandException extends \Exception {
 }
