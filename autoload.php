@@ -15,7 +15,7 @@ function namespaceAutoload( $path ) {
 
     // Поиск в одиночном файле-контейнере с именем namespace
     $class = substr( $path, 0, strpos( $path, DIRECTORY_SEPARATOR ) );
-    $file = "{$class}.php";
+    $file = stream_resolve_include_path( "{$class}.php" );
 
     if ( file_exists( $file ) ) {
         require_once( "$file" );
