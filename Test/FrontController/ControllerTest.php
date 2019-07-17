@@ -1,13 +1,27 @@
 <?php
 
+namespace Test\FrontController;
+
 use Facebook\WebDriver;
 use Facebook\WebDriver\Remote;
+use PHPUnit\Framework\TestCase;
 
-class SeleniumTest extends \PHPUnit\Framework\TestCase {
+/**
+ * Class ControllerTest
+ *
+ * Для запуска требуется:
+ * Локальный интерепретатор PHP
+ * Chrome v74
+ * Страница с запуском скрипта FrontController\Controller::run();
+ *
+ * @package Test\FrontController;
+ */
+class ControllerTest extends TestCase {
     /**
      * @var Remote\RemoteWebDriver Драйвер управления браузером
      */
     private $driver;
+    private $rooDir = "http://tokyocosmetic.dev.ram/PHPObjectPatterns";
 
     protected function setUp() {
         $host = 'http://localhost:4444/wd/hub';
@@ -15,8 +29,7 @@ class SeleniumTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testLoginCommand() {
-        $root = "http://tokyocosmetic.dev.ram/test/PHP-Object-Patterns";
-        $this->driver->get( $root . '/index.php?action=login');
+        $this->driver->get( $this->rooDir . '/index.php?action=login');
 
         $loginInput = $this->driver->findElement(WebDriver\WebDriverBy::name('login'));
         $loginInput->sendKeys('admin');

@@ -1,5 +1,7 @@
 <?php
 
+namespace Test\FrontController;
+
 require_once 'autoload.php';
 
 use PHPUnit\Framework\TestCase;

@@ -37,11 +37,3 @@ class Controller {
         $cmd->execute( $request );
     }
 }
-
-/* Тесты
-// Имитация запроса с данными
-$request = Registry\ApplicationRegistry::getRequest();
-$request->setProperty('action', 'login');
-// Активация контроллера
-FrontController\Controller::run();
-*/

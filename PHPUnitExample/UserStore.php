@@ -7,11 +7,11 @@ class UserStore {
 
     function addUser( $name, $mail, $pass ) {
         if ( isset( $this->users[$mail] ) ) {
-            throw new Exception( "Пользователь с email - {$mail} уже существует" );
+            throw new \Exception( "Пользователь с email - {$mail} уже существует" );
         }
 
         if ( strlen( $pass ) < 5 ) {
-            throw new Exception( "Длина пароля должна быть не менее 5 символов" );
+            throw new \Exception( "Длина пароля должна быть не менее 5 символов" );
         }
 
         $this->users[$mail] = array(
