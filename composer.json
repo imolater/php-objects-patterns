@@ -1,0 +1,11 @@
+{
+  "config": {
+    "COMPOSER_ALLOW_XDEBUG": "1",
+    "COMPOSER_DISABLE_XDEBUG_WARN": "1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "7.0",
+    "phpunit/phpunit-selenium": "7.0",
+    "facebook/webdriver": "1.7.1"
+  }
+}
