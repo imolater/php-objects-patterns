@@ -8,8 +8,12 @@ require_once 'autoload.php';
 <pre>
     <?
     try {
+        $login = new Observer\Login();
+        new Observer\SecurityMonitorObserver( $login );
+        new Observer\GeneralLoggerObserver( $login );
+        new Observer\PartnershipToolObserver( $login );
 
-        FrontController\Controller::run();
+        $login->notify();
 
     } catch ( \Exception $e ) {
         print $e->getMessage();

@@ -5,20 +5,7 @@
 
 namespace Decorator;
 
-class RequestHelper {
-}
-
-abstract class ProcessRequest {
-    abstract function process( RequestHelper $helper );
-}
-
-class MainProcess extends ProcessRequest {
-    public function process( RequestHelper $helper ) {
-        print __CLASS__ . ": выполнение запроса \n";
-    }
-}
-
-abstract class DecorateProcess extends ProcessRequest {
+abstract class Decorator extends ProcessRequest {
     protected $processRequest;
 
     public function __construct( ProcessRequest $request ) {
@@ -26,21 +13,21 @@ abstract class DecorateProcess extends ProcessRequest {
     }
 }
 
-class LogRequest extends DecorateProcess {
+class LogRequestDecorator extends Decorator {
     public function process( RequestHelper $helper ) {
         print __CLASS__ . ": регистрация запроса \n";
         $this->processRequest->process( $helper );
     }
 }
 
-class AuthenticateRequest extends DecorateProcess {
+class AuthenticateRequestDecorator extends Decorator {
     public function process( RequestHelper $helper ) {
         print __CLASS__ . ": аутентификация запроса \n";
         $this->processRequest->process( $helper );
     }
 }
 
-class StructureRequest extends DecorateProcess {
+class StructureRequestDecorator extends Decorator {
     public function process( RequestHelper $helper ) {
         print __CLASS__ . ": структурирование запроса \n";
         $this->processRequest->process( $helper );
@@ -48,10 +35,10 @@ class StructureRequest extends DecorateProcess {
 }
 
 /* Тесты
-$test = new Decorator\AuthenticateRequest(
-    new Decorator\StructureRequest(
-        new Decorator\LogRequest(
-            new Decorator\MainProcess()
+$test = new Decorator\AuthenticateRequestDecorator(
+    new Decorator\StructureRequestDecorator(
+        new Decorator\LogRequestDecorator(
+            new Decorator\MainProcessRequest()
         )
     ) );
 
