@@ -1,14 +1,14 @@
 <?php
 
-namespace AbstractFactoryMethod\Encoder;
+namespace AbstractFactory\Encoder;
 
 /**
  * Class ApptEncoder
  *
- * Интерфейс классов-продуктов типа ApptEncoder, генерируемые
+ * Интерфейс классов-продуктов типа ApptEncoder, генерируемых
  * классами-создателями типа CommsManager
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 abstract class ApptEncoder {
     abstract function encode();
@@ -19,7 +19,7 @@ abstract class ApptEncoder {
  *
  * Конкретная реализация продукта класса-создателя BloggsCommsManager.
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 class BloggsApptEncoder extends ApptEncoder {
     public function encode() {
@@ -32,7 +32,7 @@ class BloggsApptEncoder extends ApptEncoder {
  *
  * Конкретная реализация продукта класса-создателя MegaCommsManager.
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 class MegaApptEncoder extends ApptEncoder {
     public function encode() {

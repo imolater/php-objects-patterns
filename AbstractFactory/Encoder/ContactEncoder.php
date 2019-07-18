@@ -1,14 +1,14 @@
 <?php
 
-namespace AbstractFactoryMethod\Encoder;
+namespace AbstractFactory\Encoder;
 
 /**
  * Class ContactEncoder
  *
- * Интерфейс классов-продуктов типа ContactEncoder, генерируемые
+ * Интерфейс классов-продуктов типа ContactEncoder, генерируемых
  * классами-создателями типа CommsManager
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 abstract class ContactEncoder {
     abstract function encode();
@@ -19,7 +19,7 @@ abstract class ContactEncoder {
  *
  * Конкретная реализация продукта класса-создателя BloggsCommsManager.
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 class BloggsContactEncoder extends ContactEncoder {
     public function encode() {
@@ -32,7 +32,7 @@ class BloggsContactEncoder extends ContactEncoder {
  *
  * Конкретная реализация продукта класса-создателя MegaCommsManager.
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 class MegaContactEncoder extends ContactEncoder {
     public function encode() {

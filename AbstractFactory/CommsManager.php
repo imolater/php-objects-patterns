@@ -1,20 +1,24 @@
 <?
 /**
- * Шаблон Abstract Factory Method
+ * Шаблон Abstract Factory
  *
- * Данный шаблон решает проблему создания экземпляров объектов, используя абстрактные типы
- * и делегируя создание экземпляров объектов конкретным классам-наследникам.
+ * Данный шаблон решает проблему создания экземпляров объектов,
+ * используя абстрактные типы и делегируя создание экземпляров
+ * объектов конкретным классам-наследникам.
  *
- * Создатель - это класс фабрики, в котором определен метод для генерации объекта-продукта.
- * Классы создателей (CommsManager) отделены от продуктов (ApptEncoder), которые
- * они должны генерировать.
+ * Классы создателей (CommsManager) отделены от продуктов (Encoder),
+ * которые они должны генерировать.
  *
- * Если стандартной реализации этого метода не предусмотрено, то создание экземпляров
- * объектов оставляют дочерним классам создателя. Обычно в каждом подклассе создателя
- * создается экземпляр параллельного дочернего класса продукта (BloggsCommsManager -> BloggsApptEncoder)
+ * Создатель - это класс фабрики, в котором определен метод для
+ * генерации объекта-продукта. Если стандартной реализации этого метода
+ * не предусмотрено, то создание экземпляров объектов оставляют дочерним
+ * классам создателя.
+ *
+ * Обычно в каждом подклассе создателя создается экземпляр параллельного
+ * дочернего класса продукта (BloggsCommsManager -> BloggsApptEncoder)
  */
 
-namespace AbstractFactoryMethod;
+namespace AbstractFactory;
 
 
 /**
@@ -22,7 +26,7 @@ namespace AbstractFactoryMethod;
  *
  * Интерфейс классов-создателей
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 abstract class CommsManager {
     /**
@@ -67,7 +71,7 @@ abstract class CommsManager {
  * Конкретная реализация класса-создателя объектов работающих
  * с форматом Bloggs
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 class BloggsCommsManager extends CommsManager {
     public function getHeaderText() {
@@ -97,7 +101,7 @@ class BloggsCommsManager extends CommsManager {
  * Конкретная реализация класса-создателя объектов работающих
  * с форматом Mega
  *
- * @package AbstractFactoryMethod
+ * @package AbstractFactory
  */
 class MegaCommsManager extends CommsManager {
     public function getHeaderText() {

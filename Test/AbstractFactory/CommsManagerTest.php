@@ -3,7 +3,7 @@
 namespace Test\AbstractFactoryMethod;
 
 use PHPUnit\Framework\TestCase;
-use AbstractFactoryMethod\BloggsCommsManager;
+use AbstractFactory\BloggsCommsManager;
 
 require_once 'autoload.php';
 
